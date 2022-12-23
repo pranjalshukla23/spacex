@@ -1,8 +1,8 @@
 export const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
   const pageNumbers = [];
 
-  console.log("posts per page: " + postsPerPage);
-  console.log("total posts: " + totalPosts);
+  //console.log("posts per page: " + postsPerPage);
+  //console.log("total posts: " + totalPosts);
 
   //get total number of pages for page navigator
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {

@@ -2,19 +2,33 @@ import { History } from "../components/History";
 import Head from "next/head";
 import { Details } from "../components/Details";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "../components/Pagination";
 import { Payload } from "../components/Payload";
+import {
+  addPosts,
+  addPostsPerPage,
+  addCurrentPage,
+  fetchPosts,
+  fetchPayload,
+} from "../features/postSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function HistoryPage({ historyData }) {
-  //state to store all the posts for
-  const [posts, setPosts] = useState(historyData);
+export default function HistoryPage() {
+  //useDispatch hook is used to call a thunk function or an action
+  const dispatch = useDispatch();
 
-  //state to store the current page
-  const [currentPage, setCurrentPage] = useState(1);
+  //call a reducer
+  dispatch(addPostsPerPage(10));
 
-  //state to store number of posts to be displayed per page
-  const [postsPerPage, setPostsPerPage] = useState(5);
+  ////call a reducer
+  //dispatch(addPosts(historyData));
+
+  //useSelector hook is used to access state defined in redux
+  //useSelector takes reducer name defined in store as argument
+  const { payload, currentPage, postsPerPage } = useSelector(
+    (store) => store.post
+  );
 
   //get the index of last post to be displayed on the current page
   const indexOfLastPost = postsPerPage * currentPage;
@@ -24,12 +38,17 @@ export default function HistoryPage({ historyData }) {
 
   //get the posts between the starting index and ending index to be
   // displayed on the page
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = payload.slice(indexOfFirstPost, indexOfLastPost);
 
   //method to change page number
   const paginate = (pageNo) => {
-    setCurrentPage(pageNo);
+    dispatch(addCurrentPage(pageNo));
   };
+
+  useEffect(() => {
+    //call thunk function
+    dispatch(fetchPayload());
+  }, []);
 
   console.log("current posts", currentPosts);
   return (
@@ -40,24 +59,24 @@ export default function HistoryPage({ historyData }) {
       <Payload currentPosts={currentPosts} />
       <Pagination
         postsPerPage={postsPerPage}
-        totalPosts={posts.length}
+        totalPosts={payload.length}
         paginate={paginate}
       />
     </div>
   );
 }
 
-export async function getStaticProps(context) {
-  console.log("hitting");
-  const res = await fetch("https://api.spacexdata.com/v3/payloads");
-
-  const data = await res.json();
-
-  //console.log(data);
-
-  return {
-    props: {
-      historyData: data,
-    },
-  };
-}
+//export async function getStaticProps(context) {
+//  console.log("hitting");
+//  const res = await fetch("https://api.spacexdata.com/v3/payloads");
+//
+//  const data = await res.json();
+//
+//  //console.log(data);
+//
+//  return {
+//    props: {
+//      historyData: data,
+//    },
+//  };
+//}
