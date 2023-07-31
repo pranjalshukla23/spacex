@@ -40,7 +40,7 @@ export const Header = () => {
             Payload
           </div>
         </Link>
-        <div className="p-2 flex justify-center items-center gap-2">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-2 ">
           <input
             type="text"
             className="font-sans text-sm p-2 text-black rounded-md"
