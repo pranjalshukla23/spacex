@@ -11,6 +11,7 @@ import {
 } from "../features/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../features/postSlice";
+import Hotjar from "../components/Hotjar";
 
 export default function HistoryPage() {
   //useDispatch hook is used to call a thunk function or an action
@@ -51,9 +52,10 @@ export default function HistoryPage() {
 
   //console.log("current posts", currentPosts);
   return (
-    <div className=" h-full flex flex-col justify-center items-center text-white gap-8 ">
+    <div className=' h-full flex flex-col justify-center items-center text-white gap-8 '>
       <Head>
         <title>History</title>
+        <Hotjar />
       </Head>
       <History currentPosts={currentPosts} />
       <Pagination
