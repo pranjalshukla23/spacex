@@ -5,7 +5,7 @@ import store from "../app/store";
 import ReactGA from "react-ga4";
 
 function MyApp({ Component, pageProps }) {
-  ReactGA.initialize("G-FZ3RP5JTN1");
+  ReactGA.initialize("G-4KTDMVWTEC");
   return (
     <Provider store={store}>
       <Layout>
