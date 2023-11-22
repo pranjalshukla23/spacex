@@ -7,7 +7,7 @@ import Head from "next/head";
 import Script from "next/script";
 
 function MyApp({ Component, pageProps }) {
-  ReactGA.initialize("G-4KTDMVWTEC");
+  ReactGA.initialize("G-L0YG4TF47K");
   return (
     <>
       <Head>
